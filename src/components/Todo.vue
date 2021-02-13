@@ -5,11 +5,17 @@
       <input type="text" data-testid="todo-input" v-model="newTodo"/>
     </label>
     <button data-testid="todo-submit" @click.prevent="addTodo">Add</button>
-    <div data-testid="todos">
-      <div v-for="(todo,todoKey) of todos" :key="todoKey">
-        {{todo}}
-      </div>
-    </div>
+    <ul data-testid="todos" class="text-left">
+      <li v-for="(todo,todoKey) of todos"
+          data-testid="`todo-${todoKey}`"
+          :key="todoKey">
+        <span :data-testid="`todo-${todoKey}-toggle`" @click.prevent="toggle(todo)">
+          {{
+            todo.done ? 'Done' : 'Mark done'
+          }}</span>
+        {{ todo.description }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -30,7 +36,16 @@ export default {
   },
   methods: {
     addTodo () {
-      this.todos.push(this.newTodo)
+      this.todos.push(
+        {
+          description: this.newTodo,
+          done: false
+        }
+      )
+      this.newTodo = ''
+    },
+    toggle (todo) {
+      todo.done = !todo.done
     }
   }
 }

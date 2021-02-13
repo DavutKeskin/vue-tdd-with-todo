@@ -41,4 +41,17 @@ describe('The Todo.vue component', () => {
     expect(wrapper.find('[data-testid="todos"]').text()).toContain('my first todo item')
     expect(wrapper.find('[data-testid="todos"]').text()).toContain('my second todo item')
   })
+
+  it('empties the input field when todo has been added', async () => {
+    await addTodo('this is not important')
+    expect(wrapper.find('[data-testid="todo-input"]').element.value).toEqual('')
+  })
+
+  it('items can be marked as done by clicking an element before the item ', async () => {
+    await addTodo('First')
+    await addTodo('Second')
+    expect(wrapper.find('[data-testid="todo-0-toggle"]').text()).toContain('Mark done')
+    await wrapper.find('[data-testid="todo-0-toggle"]').trigger('click')
+    expect(wrapper.find('[data-testid="todo-0-toggle"]').text()).toEqual('Done')
+  })
 })
