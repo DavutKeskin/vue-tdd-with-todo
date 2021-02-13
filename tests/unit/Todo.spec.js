@@ -6,4 +6,13 @@ describe('The Todo.vue component', () => {
     const wrapper = shallowMount(Todo)
     expect(wrapper.exists()).toBeTruthy()
   })
+
+  it('Display the title when passed a prop', () => {
+    const wrapper = shallowMount(Todo, {
+      propsData: {
+        title: 'Props passed title'
+      }
+    })
+    expect(wrapper.text()).toMatch('Props passed title')
+  })
 })
