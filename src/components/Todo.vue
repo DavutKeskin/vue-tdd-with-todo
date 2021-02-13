@@ -9,7 +9,7 @@
       <li v-for="(todo,todoKey) of todos"
           data-testid="`todo-${todoKey}`"
           :key="todoKey">
-        <span :data-testid="`todo-${todoKey}-toggle`" @click.prevent="toggle(todo)">
+        <span :data-testid="`todo-${todoKey}-toggle`" :data-done="todo.done" @click.prevent="toggle(todo)">
           {{
             todo.done ? 'Done' : 'Mark done'
           }}</span>

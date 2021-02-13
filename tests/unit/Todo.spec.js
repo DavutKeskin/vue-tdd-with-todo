@@ -54,4 +54,16 @@ describe('The Todo.vue component', () => {
     await wrapper.find('[data-testid="todo-0-toggle"]').trigger('click')
     expect(wrapper.find('[data-testid="todo-0-toggle"]').text()).toEqual('Done')
   })
+
+  it('items can be marked as done by clicking an element before the item ', async () => {
+    function itemIsDone (itemId) {
+      return wrapper.find(`[data-testid="todo-${itemId}-toggle"]`).attributes('data-done') === 'true'
+    }
+
+    await addTodo('First')
+    await addTodo('Second')
+    expect(itemIsDone(0)).toBe(false)
+    await wrapper.find('[data-testid="todo-0-toggle"]').trigger('click')
+    expect(itemIsDone(0)).toBe(true)
+  })
 })
