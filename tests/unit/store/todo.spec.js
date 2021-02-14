@@ -58,4 +58,62 @@ describe('the mutations', function () {
       ]
     })
   })
+
+  it('should has a mutations to toggle the status of a todo', function () {
+    state = {
+      todos: [
+        {
+          description: 'First todo',
+          done: false
+        },
+        {
+          description: 'Todo to toggle',
+          done: false
+        }
+      ]
+    }
+
+    todo.mutations.TOGGLE_TODO(state, {
+      description: 'Todo to toggle',
+      done: false
+    })
+
+    expect(state.todos).toEqual([
+      {
+        description: 'First todo',
+        done: false
+      },
+      {
+        description: 'Todo to toggle',
+        done: true
+      }
+    ])
+  })
+
+  describe('the getters', function () {
+    const state = {
+      todos: [
+        {
+          description: 'First todo',
+          done: false
+        },
+        {
+          description: 'Second todo',
+          done: false
+        }
+      ]
+    }
+    const todos = todo.getters.todos(state)
+
+    expect(todos).toEqual([
+      {
+        description: 'First todo',
+        done: false
+      },
+      {
+        description: 'Second todo',
+        done: false
+      }
+    ])
+  })
 })
