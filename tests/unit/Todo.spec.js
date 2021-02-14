@@ -1,4 +1,4 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { createLocalVue, mount } from '@vue/test-utils'
 import Todo from '@/components/Todo'
 import Vuex from 'vuex'
 import { createStore } from '@/store'
@@ -9,7 +9,7 @@ localVue.use(Vuex)
 describe('The Todo.vue component', () => {
   let wrapper
   beforeEach(() => {
-    wrapper = shallowMount(Todo, {
+    wrapper = mount(Todo, {
       localVue,
       store: createStore,
       propsData: {
@@ -48,7 +48,7 @@ describe('The Todo.vue component', () => {
   it('items can be marked as done by clicking an element before the item ', async () => {
     await addTodo('First')
     await addTodo('Second')
-    expect(wrapper.find('[data-testid="todo-0-toggle"]').text()).toContain('Mark done')
+    expect(wrapper.find('[data-testid="todo-0-toggle"]').text()).toContain('Mark Done')
     await wrapper.find('[data-testid="todo-0-toggle"]').trigger('click')
     expect(wrapper.find('[data-testid="todo-0-toggle"]').text()).toEqual('Done')
   })

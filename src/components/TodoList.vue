@@ -10,6 +10,7 @@
         <span
           :data-testid="`todo-${todoKey}-toggle`"
           @click.prevent="toggle(todo)"
+          :data-done="todo.done"
           :class=" todo.done ? 'done' : ''">
           {{ todo.done ? 'Done' : 'Mark Done' }}
         </span>
