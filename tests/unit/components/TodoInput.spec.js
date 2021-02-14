@@ -6,7 +6,6 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 let store
 describe('The todo input component', function () {
-
   let wrapper
 
   const mutations = {
@@ -29,6 +28,10 @@ describe('The todo input component', function () {
     await wrapper.find('[data-testid="todo-submit"]').trigger('click')
   }
 
+  function expectMutationToHaveBeenCalledWith (item) {
+    expect(mutations.ADD_TODO).toHaveBeenCalledWith({}, item)
+  }
+
   it('should can be mounted', function () {
     expect(wrapper.exists()).toBe(true)
   })
@@ -38,12 +41,17 @@ describe('The todo input component', function () {
     expect(wrapper.find('[data-testid="todo-input"]').element.value).toEqual('')
   })
 
+  it('should allows for adding todo item', async function () {
+    await addTodo('My first todo item')
+    expectMutationToHaveBeenCalledWith('My first todo item')
+  })
+
   it('should allows for adding one todo item', async function () {
     await addTodo('My first todo item')
     await addTodo('My second todo item')
 
     expect(mutations.ADD_TODO).toHaveBeenCalledTimes(2)
-    expect(mutations.ADD_TODO).toHaveBeenCalledWith({}, 'My first todo item')
-    expect(mutations.ADD_TODO).toHaveBeenCalledWith({}, 'My second todo item')
+    expectMutationToHaveBeenCalledWith('My first todo item')
+    expectMutationToHaveBeenCalledWith('My second todo item')
   })
 })
