@@ -27,6 +27,12 @@ export default {
 
   computed: {
     ...mapGetters(['todos'])
+  },
+
+  methods: {
+    toggle (todo) {
+      this.$store.commit('TOGGLE_TODO', todo)
+    }
   }
 }
 </script>
