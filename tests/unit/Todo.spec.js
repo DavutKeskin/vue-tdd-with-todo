@@ -1,12 +1,19 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Todo from '@/components/Todo'
+import Vuex from 'vuex'
+import { createStore } from '@/store'
+
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe('The Todo.vue component', () => {
   let wrapper
   beforeEach(() => {
     wrapper = shallowMount(Todo, {
+      localVue,
+      store: createStore,
       propsData: {
-        title: 'My List'
+        title: 'A random title'
       }
     })
   })
@@ -18,15 +25,6 @@ describe('The Todo.vue component', () => {
 
   it('can be mounted', () => {
     expect(wrapper.exists()).toBeTruthy()
-  })
-
-  it('Display the title when passed a prop', () => {
-    const wrapper = shallowMount(Todo, {
-      propsData: {
-        title: 'Props passed title'
-      }
-    })
-    expect(wrapper.text()).toMatch('Props passed title')
   })
 
   it('allows for adding one todo item', async () => {
